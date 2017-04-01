@@ -41,7 +41,7 @@ public class LogAspect {
 
     private long endTimeMillis;//结束时间
 
-    @Pointcut("execution(* com.forum.service.PostService.listPostByTime(..))")
+    @Pointcut("execution(* com.forum.controller..*.*(..))")
     public void pointCut(){
 
     }
@@ -76,14 +76,14 @@ public class LogAspect {
         // 执行完方法的返回值：调用proceed()方法，就会触发切入点方法执行
         Object result = pjp.proceed();
         returnResult.put("result",result);
-        returnResult.put("resultType",result.getClass().getName());
-        return returnResult;
+        returnResult.put("resultType",result==null?null:result.getClass().getName());
+        return result;
     }
 
 
     private void printLog(){
         String optTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startTimeMillis);
-        logger.info("\n 用户:"+uid
+        logger.info("用户:"+uid
                 + ",请求URI:"+requestPath
                 + ",请求时间:"+optTime
                 +",用时："+(endTimeMillis-startTimeMillis)+"ms"

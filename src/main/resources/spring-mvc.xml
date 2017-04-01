@@ -20,6 +20,9 @@
     </context:component-scan>
     <mvc:annotation-driven/>
 
+    <!--开启代理 仅仅在springmvc上配置切面才有效-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <!--上传文件-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
