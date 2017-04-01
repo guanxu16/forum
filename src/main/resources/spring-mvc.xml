@@ -37,7 +37,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*" />
-            <bean class="com.fc.interceptor.LoginInterceptor">
+            <bean class="com.forum.interceptor.LoginInterceptor">
                 <property name="excludedUrls">
                     <list>
                         <value>/toIndex.do</value>
