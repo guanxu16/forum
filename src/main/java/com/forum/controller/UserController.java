@@ -6,7 +6,6 @@ import com.forum.service.PostService;
 import com.forum.service.UserService;
 import com.forum.util.MyConstant;
 import com.forum.util.QiniuSDKUtil;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +27,6 @@ public class UserController {
 
     @Autowired
     private PostService postService;
-
-    /*@Autowired
-    private QiniuService qiniuService;*/
-
-    private Logger logger = Logger.getLogger(QiniuService.class);
 
     /**
      * 查看我的个人主页
