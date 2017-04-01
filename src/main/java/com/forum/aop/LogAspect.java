@@ -41,7 +41,7 @@ public class LogAspect {
 
     private long endTimeMillis;//结束时间
 
-    @Pointcut("execution(* com.forum.controller..*.*(..))")
+    @Pointcut("execution(* com.forum.service..*.*(..))")
     public void pointCut(){
 
     }
@@ -60,21 +60,23 @@ public class LogAspect {
     @Around(value = "pointCut()")
     public Object doAroundInServiceLayer(ProceedingJoinPoint pjp)throws Throwable{
 
-        /**
-         * 1.获取request信息
-         * 2.根据request获取session
-         * 3.从session中取出登录用户信息
-         */
         ServletRequestAttributes ra = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest httpServletRequest = ra.getRequest();
         HttpSession session = httpServletRequest.getSession();
         uid = session.getAttribute("uid")==null?"未登录":session.getAttribute("uid").toString();
         parameters = pjp.getArgs();
+        //获取方法参数的类型
+        StringBuffer paramterType = new StringBuffer();
+        paramterType.append("(");
+        for(Object o : parameters){
+            paramterType.append(o.getClass().getSimpleName());
+        }
+        paramterType.append(")");
         requestPath = httpServletRequest.getRequestURI();
-        returnResult = new HashMap<String,Object>();
-        requestMethodName = pjp.getSignature().getDeclaringTypeName()+"."+pjp.getSignature().getDeclaringTypeName();
+        requestMethodName = pjp.getSignature().getDeclaringTypeName()+"."+pjp.getSignature().getName()+paramterType.toString();
         // 执行完方法的返回值：调用proceed()方法，就会触发切入点方法执行
         Object result = pjp.proceed();
+        returnResult = new HashMap<String,Object>();
         returnResult.put("result",result);
         returnResult.put("resultType",result==null?null:result.getClass().getName());
         return result;
@@ -87,8 +89,8 @@ public class LogAspect {
                 + ",请求URI:"+requestPath
                 + ",请求时间:"+optTime
                 +",用时："+(endTimeMillis-startTimeMillis)+"ms"
-                +"方法："+requestMethodName
-                +",参数："+ Arrays.toString(parameters)
+                +"，方法："+requestMethodName
+                +",参数值："+ Arrays.toString(parameters)
                 +"返回："+ JSONObject.toJSONString(returnResult));
 
 
