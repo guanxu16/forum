@@ -19,6 +19,9 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
+    <!--aop设置代理为true,由cglib产生统一代理-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <!--邮件处理-->
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.host}"/>

@@ -1,5 +1,6 @@
 package com.forum.mapper;
 
+import com.forum.BaseTest;
 import com.forum.service.LoginService;
 import com.forum.service.PostService;
 import org.junit.Test;
@@ -8,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring.xml","classpath:spring-mybatis.xml","classpath:spring-redis.xml","classpath:spring-mvc.xml"})
-public class UserMapperTest {
+public class UserMapperTest extends BaseTest{
 
     @Autowired
     private LoginService loginService;

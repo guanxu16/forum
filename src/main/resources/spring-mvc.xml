@@ -14,14 +14,12 @@
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-
-    <context:component-scan base-package="com">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    <!--默认use-default-filters是true,需要改为false才会仅扫描include-filter的注解-->
+    <context:component-scan base-package="com" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <mvc:annotation-driven/>
 
-    <!--开启代理 仅仅在springmvc上配置切面才有效-->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!--上传文件-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
@@ -39,7 +37,7 @@
     <!--配置拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*" />
+            <mvc:mapping path="/*"/>
             <bean class="com.forum.interceptor.LoginInterceptor">
                 <property name="excludedUrls">
                     <list>
@@ -56,7 +54,7 @@
                         <value>/forgetPassword.do</value>
                         <value>/afterForgetPassword.do</value>
                         <value>/verify.do</value>
-			            <value>/listImage.do</value>
+                        <value>/listImage.do</value>
                     </list>
                 </property>
             </bean>
