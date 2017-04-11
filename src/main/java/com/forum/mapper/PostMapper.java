@@ -1,9 +1,11 @@
 package com.forum.mapper;
 
+import com.forum.dto.Page;
 import com.forum.model.Post;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface PostMapper {
@@ -28,5 +30,7 @@ public interface PostMapper {
     int getUidByPid(int pid);
 
     String getTitleByPid(int pid);
+
+    List<Post> listPagePostByTid(@Param("map")Map<String,Object> paramMap,@Param("page") Page page);
 
 }
