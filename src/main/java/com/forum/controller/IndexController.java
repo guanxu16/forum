@@ -31,17 +31,21 @@ public class IndexController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private QiniuSDKUtil qiniuSDKUtil;
+
     /**
      * 去主页
+     *
      * @param model
      * @param request
      * @return
      */
     @RequestMapping("/toIndex.do")
-    public String toIndex(Model model, HttpServletRequest request){
+    public String toIndex(Model model, HttpServletRequest request) {
         System.out.println(request.getRemoteAddr());
         //记录访问信息
-        userService.record(request.getRequestURL(),request.getContextPath(),request.getRemoteAddr());
+        userService.record(request.getRequestURL(), request.getContextPath(), request.getRemoteAddr());
         //列出帖子
         PageBean<Post> pageBean = postService.listPostByTime(1);
         //列出用户
@@ -49,9 +53,9 @@ public class IndexController {
         //列出活跃用户
         List<User> hotUserList = userService.listUserByHot();
         //向模型中添加数据
-        model.addAttribute("pageBean",pageBean);
-        model.addAttribute("userList",userList);
-        model.addAttribute("hotUserList",hotUserList);
+        model.addAttribute("pageBean", pageBean);
+        model.addAttribute("userList", userList);
+        model.addAttribute("hotUserList", hotUserList);
         return "index";
     }
 
@@ -79,7 +83,7 @@ public class IndexController {
         // 生成云端的真实文件名
         String remoteFileName = UUID.randomUUID().toString() + fileNameExtension;
         //上传
-        QiniuSDKUtil.upload(myFileName.getBytes(), remoteFileName);
+        qiniuSDKUtil.upload(myFileName.getBytes(), remoteFileName);
         // 返回图片的URL地址
         return MyConstant.QINIU_IMAGE_URL + remoteFileName;
     }
