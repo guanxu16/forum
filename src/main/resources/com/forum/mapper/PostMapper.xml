@@ -81,6 +81,23 @@
     <select id="getTitleByPid" resultType="String">
         select title from post where pid=#{pid}
     </select>
+    
+    <select id="listPagePostByTid" resultType="com.forum.model.Post">
+        select pid,title,publish_time from post
+        <if test="map!=null">
+            <where>
+                <if test="map.tid!=null">
+                    and tid = #{map.tid}
+                </if>
+            </where>
+        </if>
+        <if test="page!=null">
+            <if test="page.orderBy!=null">
+                ${page.orderBy}
+            </if>
+                limit ${page.pageNo * page.pageSize},${page.pageSize}
+        </if>
+    </select>
 </mapper>
 
 
